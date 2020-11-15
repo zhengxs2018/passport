@@ -55,7 +55,7 @@ export default {
           { min: 4, max: 16, message: '用户名长度必须为 4~16 个字', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '秘密必填', trigger: 'blur' },
+          { required: true, message: '密码必填', trigger: 'blur' },
           { min: 4, max: 16, message: '密码长度必须为 4~16 个字', trigger: 'blur' }
         ]
       }
