@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+/// 用户表
+model User {
+  // ========= 基础信息 =========
+  id        Int       @id @default(autoincrement())
+  uid       String    @unique @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // ========= 用户信息 =========
+  avatar   String? /// 头像
+  nickname String? @unique /// 昵称
+  sex      Int     @default(0) /// 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+
+  // ========= 账号 =========
+  username String? @unique /// 账号名称
+  password String? /// 密码
+  verified Boolean @default(false) /// 账号验证
+
+  // ========= 邮箱 =========
+  email         String? @unique /// 注册邮箱
+  emailVerified Boolean @default(false) /// 验证注册邮箱
+
+  // ========= 手机号 =========
+  mobile         String? @unique /// 注册手机号
+  mobileVerified Boolean @default(false) /// 验证注册手机号
+
+  // ======= 权限 & 状态 ========
+  isLocked Boolean @default(false) /// 账号已锁定
+  isAdmin  Boolean @default(false) /// 是否超级管理员
+
+  // ======= 关联表 ========
+  OwnerUserLog    UserLog[]   @relation("OwnerUserLog")
+  OperatorUserLog UserLog[]   @relation("OperatorUserLog")
+  ThirdUser       ThirdUser[]
+}
+
+/// 用户日志表
+model UserLog {
+  // ======= 基础信息 ========
+  id        Int      @id @default(autoincrement())
+  level     Int /// 日志级别
+  action    String /// 触发的动作
+  msg       String /// 描述消息
+  details   String? /// 更多明细
+  createdAt DateTime @default(now())
+
+  // ======= 隐私数据 ========
+  userAgent String /// 用户代理
+  ipAddress String /// ip 地址
+
+  // ======= 拥有者 ========
+  ownerId String
+  Owner   User   @relation(name: "OwnerUserLog", fields: [ownerId], references: [uid])
+
+  // ======= 操作者 ========
+  operatorId String?
+  Operator   User?   @relation(name: "OperatorUserLog", fields: [operatorId], references: [uid])
+}
+
+model ThirdUser {
+  // ======= 基础信息 ========
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // ======= 用户信息 ========
+  openId   String /// 开放用户
+  unionid  String? /// 仅微信才有
+  avatar   String /// 用户头像
+  nickname String /// 昵称
+  sex      Int     @default(0) /// 用户的性别，1: 男性，2: 女性，0: 未知
+  language String? // 语言
+  country  String? // 国家
+  province String? // 省份
+  city     String? // 城市
+  details  String /// 其他明细
+
+  // ======= 供应商信息 ========
+  provider String
+
+  // ======= 关联用户 ========
+  userId String
+  User   User   @relation(fields: [userId], references: [uid])
+}
+
+model WeChatUserToken {
+  id            Int    @id @default(autoincrement())
+  openid        String @unique
+  scope         String
+  access_token  String
+  refresh_token String
+  expires_in    Int
+  create_at     Int
+}
