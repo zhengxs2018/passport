@@ -98,6 +98,7 @@ model ThirdUser {
 model WeChatUserToken {
   id            Int    @id @default(autoincrement())
   openid        String @unique
+  unionid       String?
   scope         String
   access_token  String
   refresh_token String

@@ -522,6 +522,7 @@ export declare type ThirdUserDistinctFieldEnum = (typeof ThirdUserDistinctFieldE
 export declare const WeChatUserTokenDistinctFieldEnum: {
   id: 'id',
   openid: 'openid',
+  unionid: 'unionid',
   scope: 'scope',
   access_token: 'access_token',
   refresh_token: 'refresh_token',
@@ -2225,6 +2226,7 @@ export type ThirdUserArgs = {
 export type WeChatUserToken = {
   id: number
   openid: string
+  unionid: string | null
   scope: string
   access_token: string
   refresh_token: string
@@ -2317,6 +2319,7 @@ export type GetWeChatUserTokenAggregateScalarType<T extends any> = {
 export type WeChatUserTokenSelect = {
   id?: boolean
   openid?: boolean
+  unionid?: boolean
   scope?: boolean
   access_token?: boolean
   refresh_token?: boolean
@@ -2861,6 +2864,7 @@ export type WeChatUserTokenWhereInput = {
   NOT?: XOR<WeChatUserTokenWhereInput, Enumerable<WeChatUserTokenWhereInput>>
   id?: XOR<IntFilter, number>
   openid?: XOR<StringFilter, string>
+  unionid?: StringNullableFilter | string | null
   scope?: XOR<StringFilter, string>
   access_token?: XOR<StringFilter, string>
   refresh_token?: XOR<StringFilter, string>
@@ -2871,6 +2875,7 @@ export type WeChatUserTokenWhereInput = {
 export type WeChatUserTokenOrderByInput = {
   id?: SortOrder
   openid?: SortOrder
+  unionid?: SortOrder
   scope?: SortOrder
   access_token?: SortOrder
   refresh_token?: SortOrder
@@ -3029,6 +3034,7 @@ export type ThirdUserUpdateManyMutationInput = {
 
 export type WeChatUserTokenCreateInput = {
   openid: string
+  unionid?: XOR<string, null>
   scope: string
   access_token: string
   refresh_token: string
@@ -3038,6 +3044,7 @@ export type WeChatUserTokenCreateInput = {
 
 export type WeChatUserTokenUpdateInput = {
   openid?: XOR<string, StringFieldUpdateOperationsInput>
+  unionid?: string | NullableStringFieldUpdateOperationsInput | null
   scope?: XOR<string, StringFieldUpdateOperationsInput>
   access_token?: XOR<string, StringFieldUpdateOperationsInput>
   refresh_token?: XOR<string, StringFieldUpdateOperationsInput>
@@ -3047,6 +3054,7 @@ export type WeChatUserTokenUpdateInput = {
 
 export type WeChatUserTokenUpdateManyMutationInput = {
   openid?: XOR<string, StringFieldUpdateOperationsInput>
+  unionid?: string | NullableStringFieldUpdateOperationsInput | null
   scope?: XOR<string, StringFieldUpdateOperationsInput>
   access_token?: XOR<string, StringFieldUpdateOperationsInput>
   refresh_token?: XOR<string, StringFieldUpdateOperationsInput>
